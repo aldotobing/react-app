@@ -1,40 +1,34 @@
-import React, { Component } from 'react';
-import './Calculator.css';
-import ResultComponent from 'components/ResultComponent';
-import KeyPadComponent from 'components/KeypadComponent';
-import {AngkaTerbilang} from 'helper.js';
+import React, { Component } from "react";
+import "./Calculator.css";
+import ResultComponent from "components/ResultComponent";
+import KeyPadComponent from "components/KeypadComponent";
+import { AngkaTerbilang } from "helper.js";
 
 class Calculator extends Component {
   state = {
     result: "",
-    resultTerbilang: ""
-  }
+    resultTerbilang: "",
+  };
 
-  onClick = button => {
-    if(button === "=") {
+  onClick = (button) => {
+    if (button === "=") {
       this.calculate();
-    }
-
-    else if(button === "C") {
+    } else if (button === "C") {
       this.reset();
-    }
-
-    else if(button === "CE") {
+    } else if (button === "CE") {
       this.backspace();
-    }
-
-    else {
+    } else {
       this.setState({
         ...this.state,
-        result: this.state.result + button
-      })
+        result: this.state.result + button,
+      });
     }
   };
 
   calculate = () => {
-    var checkResult = ''
-    if(this.state.result.includes('--')) {
-      checkResult = this.state.result.replace('--', '+')
+    var checkResult = "";
+    if (this.state.result.includes("--")) {
+      checkResult = this.state.result.replace("--", "+");
     } else {
       checkResult = this.state.result;
     }
@@ -43,13 +37,12 @@ class Calculator extends Component {
       this.setState({
         result: (eval(checkResult) || "") + "",
         resultTerbilang: (eval(checkResult) || "") + "",
-      })
-    } catch(e) {
+      });
+    } catch (e) {
       this.setState({
         ...this.state,
-        result: "error"
-
-      })
+        result: "error",
+      });
     }
   };
 
@@ -57,28 +50,30 @@ class Calculator extends Component {
     this.setState({
       ...this.state,
       result: "",
-      resultTerbilang: ""
-    })
+      resultTerbilang: "",
+    });
   };
 
   backspace = () => {
     this.setState({
       ...this.state,
-        result: this.state.result.slice(0, -1)
-    })
+      result: this.state.result.slice(0, -1),
+    });
   };
 
   render() {
     return (
       <div>
         <div className="calculator-body">
-          <h1>Simple Calculator</h1>
+          <h1>Number to String Calculator</h1>
           <ResultComponent result={this.state.result} />
-          <h1 className='terbilang'>{AngkaTerbilang(this.state.resultTerbilang)}</h1>
+          <h1 className="terbilang">
+            {AngkaTerbilang(this.state.resultTerbilang)}
+          </h1>
           <KeyPadComponent onClick={this.onClick} />
         </div>
       </div>
-    )
+    );
   }
 }
 
